@@ -1,0 +1,44 @@
+datasource mongo {
+  provider = "mongodb"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt DateTime @default(now())
+  firstName String?
+  id        String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+model OpenApp {
+  activate  Boolean
+  appId     String   @unique
+  appName   String
+  appSecret String
+  botApp    BotApp?  @relation(fields: [botAppId], references: [id])
+  botAppId  String?
+  createdAt DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  updatedAt DateTime @updatedAt
+}
+
+model BotApp {
+  apiEndPoint String
+  apiSecret   String
+  appDesc     String?
+  appName     String    @unique
+  createdAt   DateTime  @default(now())
+  id          String    @id @default(auto()) @map("_id") @mongo.ObjectId
+  inputs      Json?
+  openApps    OpenApp[]
+  updatedAt   DateTime  @updatedAt
+  welcome     String?
+}
