@@ -26,7 +26,6 @@ import { OpenAppCountArgs } from "./OpenAppCountArgs";
 import { OpenAppFindManyArgs } from "./OpenAppFindManyArgs";
 import { OpenAppFindUniqueArgs } from "./OpenAppFindUniqueArgs";
 import { OpenApp } from "./OpenApp";
-import { BotAppFindManyArgs } from "../../botApp/base/BotAppFindManyArgs";
 import { BotApp } from "../../botApp/base/BotApp";
 import { OpenAppService } from "../openApp.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
@@ -94,7 +93,15 @@ export class OpenAppResolverBase {
   ): Promise<OpenApp> {
     return await this.service.create({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        botApp: args.data.botApp
+          ? {
+              connect: args.data.botApp,
+            }
+          : undefined,
+      },
     });
   }
 
@@ -111,7 +118,15 @@ export class OpenAppResolverBase {
     try {
       return await this.service.update({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          botApp: args.data.botApp
+            ? {
+                connect: args.data.botApp,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -145,22 +160,23 @@ export class OpenAppResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [BotApp], { name: "botApp" })
+  @graphql.ResolveField(() => BotApp, {
+    nullable: true,
+    name: "botApp",
+  })
   @nestAccessControl.UseRoles({
     resource: "BotApp",
     action: "read",
     possession: "any",
   })
   async resolveFieldBotApp(
-    @graphql.Parent() parent: OpenApp,
-    @graphql.Args() args: BotAppFindManyArgs
-  ): Promise<BotApp[]> {
-    const results = await this.service.findBotApp(parent.id, args);
+    @graphql.Parent() parent: OpenApp
+  ): Promise<BotApp | null> {
+    const result = await this.service.getBotApp(parent.id);
 
-    if (!results) {
-      return [];
+    if (!result) {
+      return null;
     }
-
-    return results;
+    return result;
   }
 }

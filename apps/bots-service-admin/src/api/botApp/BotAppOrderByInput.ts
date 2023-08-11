@@ -8,7 +8,6 @@ export type BotAppOrderByInput = {
   createdAt?: SortOrder;
   id?: SortOrder;
   inputs?: SortOrder;
-  openAppsId?: SortOrder;
   updatedAt?: SortOrder;
   welcome?: SortOrder;
 };

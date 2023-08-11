@@ -10,37 +10,37 @@ https://docs.amplication.com/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { InputType, Field } from "@nestjs/graphql";
-import { BotAppWhereUniqueInput } from "../../botApp/base/BotAppWhereUniqueInput";
+import { OpenAppWhereUniqueInput } from "../../openApp/base/OpenAppWhereUniqueInput";
 import { ApiProperty } from "@nestjs/swagger";
 
 @InputType()
-class BotAppUpdateManyWithoutOpenAppsInput {
-  @Field(() => [BotAppWhereUniqueInput], {
+class OpenAppUpdateManyWithoutBotAppsInput {
+  @Field(() => [OpenAppWhereUniqueInput], {
     nullable: true,
   })
   @ApiProperty({
     required: false,
-    type: () => [BotAppWhereUniqueInput],
+    type: () => [OpenAppWhereUniqueInput],
   })
-  connect?: Array<BotAppWhereUniqueInput>;
+  connect?: Array<OpenAppWhereUniqueInput>;
 
-  @Field(() => [BotAppWhereUniqueInput], {
+  @Field(() => [OpenAppWhereUniqueInput], {
     nullable: true,
   })
   @ApiProperty({
     required: false,
-    type: () => [BotAppWhereUniqueInput],
+    type: () => [OpenAppWhereUniqueInput],
   })
-  disconnect?: Array<BotAppWhereUniqueInput>;
+  disconnect?: Array<OpenAppWhereUniqueInput>;
 
-  @Field(() => [BotAppWhereUniqueInput], {
+  @Field(() => [OpenAppWhereUniqueInput], {
     nullable: true,
   })
   @ApiProperty({
     required: false,
-    type: () => [BotAppWhereUniqueInput],
+    type: () => [OpenAppWhereUniqueInput],
   })
-  set?: Array<BotAppWhereUniqueInput>;
+  set?: Array<OpenAppWhereUniqueInput>;
 }
 
-export { BotAppUpdateManyWithoutOpenAppsInput as BotAppUpdateManyWithoutOpenAppsInput };
+export { OpenAppUpdateManyWithoutBotAppsInput as OpenAppUpdateManyWithoutBotAppsInput };
