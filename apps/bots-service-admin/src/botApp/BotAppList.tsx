@@ -1,6 +1,14 @@
 import * as React from "react";
-import { List, Datagrid, ListProps, TextField, DateField } from "react-admin";
+import {
+  List,
+  Datagrid,
+  ListProps,
+  TextField,
+  DateField,
+  ReferenceField,
+} from "react-admin";
 import Pagination from "../Components/Pagination";
+import { OPENAPP_TITLE_FIELD } from "../openApp/OpenAppTitle";
 
 export const BotAppList = (props: ListProps): React.ReactElement => {
   return (
@@ -18,6 +26,14 @@ export const BotAppList = (props: ListProps): React.ReactElement => {
         <TextField label="API 端点" source="apiEndPoint" />
         <TextField label="API 密钥" source="apiSecret" />
         <TextField label="提示词参数" source="inputs" />
+        <ReferenceField
+          label="OpenApps"
+          source="openapp.id"
+          reference="OpenApp"
+        >
+          <TextField source={OPENAPP_TITLE_FIELD} />
+        </ReferenceField>
+        <DateField source="updatedAt" label="更新时间" />
         <TextField label="对话开场白" source="welcome" />
         <DateField source="createdAt" label="创建时间" />
         <DateField source="updatedAt" label="更新时间" />

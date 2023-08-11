@@ -14,7 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
-import { OpenAppListRelationFilter } from "../../openApp/base/OpenAppListRelationFilter";
+import { OpenAppWhereUniqueInput } from "../../openApp/base/OpenAppWhereUniqueInput";
 
 @InputType()
 class BotAppWhereInput {
@@ -42,15 +42,15 @@ class BotAppWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => OpenAppListRelationFilter,
+    type: () => OpenAppWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => OpenAppListRelationFilter)
+  @Type(() => OpenAppWhereUniqueInput)
   @IsOptional()
-  @Field(() => OpenAppListRelationFilter, {
+  @Field(() => OpenAppWhereUniqueInput, {
     nullable: true,
   })
-  openApps?: OpenAppListRelationFilter;
+  openApps?: OpenAppWhereUniqueInput;
 }
 
 export { BotAppWhereInput as BotAppWhereInput };

@@ -1,14 +1,12 @@
 import * as React from "react";
-
 import {
   Create,
   SimpleForm,
   CreateProps,
   TextInput,
-  ReferenceArrayInput,
-  SelectArrayInput,
+  ReferenceInput,
+  SelectInput,
 } from "react-admin";
-
 import { OpenAppTitle } from "../openApp/OpenAppTitle";
 
 export const BotAppCreate = (props: CreateProps): React.ReactElement => {
@@ -21,14 +19,14 @@ export const BotAppCreate = (props: CreateProps): React.ReactElement => {
         <TextInput label="API 密钥" source="apiSecret" />
         <TextInput label="对话开场白" source="welcome" />
         <div />
-        <ReferenceArrayInput
-          source="openApps"
+        <ReferenceInput
+          source="openApps.id"
           reference="OpenApp"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
+          label="OpenApps"
         >
-          <SelectArrayInput optionText={OpenAppTitle} />
-        </ReferenceArrayInput>
+          <SelectInput optionText={OpenAppTitle} />
+        </ReferenceInput>
+        <TextInput label="对话开场白" source="welcome" />
       </SimpleForm>
     </Create>
   );
