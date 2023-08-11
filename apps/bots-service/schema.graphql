@@ -1,0 +1,269 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input BooleanFilter {
+  equals: Boolean
+  not: Boolean
+}
+
+type BotApp {
+  apiEndPoint: String!
+  apiSecret: String!
+  appDesc: String
+  appName: String!
+  createdAt: DateTime!
+  id: String!
+  inputs: JSON
+  openApps(orderBy: [OpenAppOrderByInput!], skip: Float, take: Float, where: OpenAppWhereInput): [OpenApp!]!
+  updatedAt: DateTime!
+  welcome: String
+}
+
+input BotAppCreateInput {
+  apiEndPoint: String!
+  apiSecret: String!
+  appDesc: String
+  appName: String!
+  inputs: JSON
+  openApps: OpenAppCreateNestedManyWithoutBotAppsInput
+  welcome: String
+}
+
+input BotAppOrderByInput {
+  apiEndPoint: SortOrder
+  apiSecret: SortOrder
+  appDesc: SortOrder
+  appName: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  inputs: SortOrder
+  updatedAt: SortOrder
+  welcome: SortOrder
+}
+
+input BotAppUpdateInput {
+  apiEndPoint: String
+  apiSecret: String
+  appDesc: String
+  appName: String
+  inputs: JSON
+  openApps: OpenAppUpdateManyWithoutBotAppsInput
+  welcome: String
+}
+
+input BotAppWhereInput {
+  appName: StringFilter
+  id: StringFilter
+  openApps: OpenAppListRelationFilter
+}
+
+input BotAppWhereUniqueInput {
+  id: String!
+}
+
+input Credentials {
+  password: String!
+  username: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+type MetaQueryPayload {
+  count: Float!
+}
+
+type Mutation {
+  createBotApp(data: BotAppCreateInput!): BotApp!
+  createOpenApp(data: OpenAppCreateInput!): OpenApp!
+  createUser(data: UserCreateInput!): User!
+  deleteBotApp(where: BotAppWhereUniqueInput!): BotApp!
+  deleteOpenApp(where: OpenAppWhereUniqueInput!): OpenApp!
+  deleteUser(where: UserWhereUniqueInput!): User!
+  login(credentials: Credentials!): UserInfo!
+  updateBotApp(data: BotAppUpdateInput!, where: BotAppWhereUniqueInput!): BotApp!
+  updateOpenApp(data: OpenAppUpdateInput!, where: OpenAppWhereUniqueInput!): OpenApp!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+}
+
+type OpenApp {
+  activate: Boolean!
+  appId: String!
+  appName: String!
+  appSecret: String!
+  botApp: BotApp
+  createdAt: DateTime!
+  id: String!
+  updatedAt: DateTime!
+}
+
+input OpenAppCreateInput {
+  activate: Boolean!
+  appId: String!
+  appName: String!
+  appSecret: String!
+  botApp: BotAppWhereUniqueInput
+}
+
+input OpenAppCreateNestedManyWithoutBotAppsInput {
+  connect: [OpenAppWhereUniqueInput!]
+}
+
+input OpenAppListRelationFilter {
+  every: OpenAppWhereInput
+  none: OpenAppWhereInput
+  some: OpenAppWhereInput
+}
+
+input OpenAppOrderByInput {
+  activate: SortOrder
+  appId: SortOrder
+  appName: SortOrder
+  appSecret: SortOrder
+  botAppId: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  updatedAt: SortOrder
+}
+
+input OpenAppUpdateInput {
+  activate: Boolean
+  appId: String
+  appName: String
+  appSecret: String
+  botApp: BotAppWhereUniqueInput
+}
+
+input OpenAppUpdateManyWithoutBotAppsInput {
+  connect: [OpenAppWhereUniqueInput!]
+  disconnect: [OpenAppWhereUniqueInput!]
+  set: [OpenAppWhereUniqueInput!]
+}
+
+input OpenAppWhereInput {
+  activate: BooleanFilter
+  appId: StringFilter
+  appName: StringFilter
+  botApp: BotAppWhereUniqueInput
+  id: StringFilter
+}
+
+input OpenAppWhereUniqueInput {
+  id: String!
+}
+
+type Query {
+  _botAppsMeta(where: BotAppWhereInput): MetaQueryPayload!
+  _openAppsMeta(where: OpenAppWhereInput): MetaQueryPayload!
+  _usersMeta(where: UserWhereInput): MetaQueryPayload!
+  botApp(where: BotAppWhereUniqueInput!): BotApp
+  botApps(orderBy: [BotAppOrderByInput!], skip: Float, take: Float, where: BotAppWhereInput): [BotApp!]!
+  openApp(where: OpenAppWhereUniqueInput!): OpenApp
+  openApps(orderBy: [OpenAppOrderByInput!], skip: Float, take: Float, where: OpenAppWhereInput): [OpenApp!]!
+  user(where: UserWhereUniqueInput!): User
+  userInfo: UserInfo!
+  users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
+}
+
+enum QueryMode {
+  Default
+  Insensitive
+}
+
+enum SortOrder {
+  Asc
+  Desc
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+type User {
+  createdAt: DateTime!
+  firstName: String
+  id: String!
+  lastName: String
+  roles: JSON!
+  updatedAt: DateTime!
+  username: String!
+}
+
+input UserCreateInput {
+  firstName: String
+  lastName: String
+  password: String!
+  roles: JSON!
+  username: String!
+}
+
+type UserInfo {
+  accessToken: String
+  id: String!
+  roles: [String!]!
+  username: String!
+}
+
+input UserOrderByInput {
+  createdAt: SortOrder
+  firstName: SortOrder
+  id: SortOrder
+  lastName: SortOrder
+  password: SortOrder
+  roles: SortOrder
+  updatedAt: SortOrder
+  username: SortOrder
+}
+
+input UserUpdateInput {
+  firstName: String
+  lastName: String
+  password: String
+  roles: JSON
+  username: String
+}
+
+input UserWhereInput {
+  firstName: StringNullableFilter
+  id: StringFilter
+  lastName: StringNullableFilter
+  username: StringFilter
+}
+
+input UserWhereUniqueInput {
+  id: String!
+}

@@ -23,10 +23,11 @@ export const OpenAppList = (props: ListProps): React.ReactElement => {
       pagination={<Pagination />}
     >
       <Datagrid rowClick="show">
-        <BooleanField label="激活状态" source="activate" />
+        <TextField label="ID" source="id" />
         <TextField label="应用标识" source="appId" />
         <TextField label="应用名" source="appName" />
         <TextField label="密钥" source="appSecret" />
+        <BooleanField label="激活状态" source="activate" />
         <ReferenceField
           label="大模型应用"
           source="botapp.id"
@@ -35,7 +36,6 @@ export const OpenAppList = (props: ListProps): React.ReactElement => {
           <TextField source={BOTAPP_TITLE_FIELD} />
         </ReferenceField>
         <DateField source="createdAt" label="创建时间" />
-        <TextField label="ID" source="id" />
         <DateField source="updatedAt" label="更新时间" />
       </Datagrid>
     </List>

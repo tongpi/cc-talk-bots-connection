@@ -15,10 +15,11 @@ export const BotAppEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
+        <TextInput label="AI应用名称" source="appName" />
+        <TextInput label="简单介绍" source="appDesc" />
         <TextInput label="API 端点" source="apiEndPoint" />
         <TextInput label="API 密钥" source="apiSecret" />
-        <TextInput label="简单介绍" source="appDesc" />
-        <TextInput label="AI应用名称" source="appName" />
+        <TextInput label="对话开场白" source="welcome" />
         <div />
         <ReferenceArrayInput
           source="openApps"
@@ -28,7 +29,6 @@ export const BotAppEdit = (props: EditProps): React.ReactElement => {
         >
           <SelectArrayInput optionText={OpenAppTitle} />
         </ReferenceArrayInput>
-        <TextInput label="对话开场白" source="welcome" />
       </SimpleForm>
     </Edit>
   );
