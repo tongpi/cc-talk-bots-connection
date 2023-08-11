@@ -6,8 +6,8 @@ import {
   CreateProps,
   BooleanInput,
   TextInput,
-  ReferenceInput,
-  SelectInput,
+  ReferenceArrayInput,
+  SelectArrayInput,
 } from "react-admin";
 
 import { BotAppTitle } from "../botApp/BotAppTitle";
@@ -20,13 +20,14 @@ export const OpenAppCreate = (props: CreateProps): React.ReactElement => {
         <TextInput label="应用标识" source="appId" />
         <TextInput label="应用名" source="appName" />
         <TextInput label="密钥" source="appSecret" />
-        <ReferenceInput
-          source="botApp.id"
+        <ReferenceArrayInput
+          source="botApp"
           reference="BotApp"
-          label="大模型应用"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
         >
-          <SelectInput optionText={BotAppTitle} />
-        </ReferenceInput>
+          <SelectArrayInput optionText={BotAppTitle} />
+        </ReferenceArrayInput>
       </SimpleForm>
     </Create>
   );

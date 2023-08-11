@@ -17,7 +17,7 @@ import {
   IsString,
   ValidateNested,
 } from "class-validator";
-import { BotAppWhereUniqueInput } from "../../botApp/base/BotAppWhereUniqueInput";
+import { BotAppUpdateManyWithoutOpenAppsInput } from "./BotAppUpdateManyWithoutOpenAppsInput";
 import { Type } from "class-transformer";
 
 @InputType()
@@ -68,15 +68,15 @@ class OpenAppUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => BotAppWhereUniqueInput,
+    type: () => BotAppUpdateManyWithoutOpenAppsInput,
   })
   @ValidateNested()
-  @Type(() => BotAppWhereUniqueInput)
+  @Type(() => BotAppUpdateManyWithoutOpenAppsInput)
   @IsOptional()
-  @Field(() => BotAppWhereUniqueInput, {
+  @Field(() => BotAppUpdateManyWithoutOpenAppsInput, {
     nullable: true,
   })
-  botApp?: BotAppWhereUniqueInput | null;
+  botApp?: BotAppUpdateManyWithoutOpenAppsInput;
 }
 
 export { OpenAppUpdateInput as OpenAppUpdateInput };

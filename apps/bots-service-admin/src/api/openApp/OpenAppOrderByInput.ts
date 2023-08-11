@@ -5,7 +5,6 @@ export type OpenAppOrderByInput = {
   appId?: SortOrder;
   appName?: SortOrder;
   appSecret?: SortOrder;
-  botAppId?: SortOrder;
   createdAt?: SortOrder;
   id?: SortOrder;
   updatedAt?: SortOrder;

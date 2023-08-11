@@ -57,12 +57,12 @@ class OpenApp {
 
   @ApiProperty({
     required: false,
-    type: () => BotApp,
+    type: () => [BotApp],
   })
   @ValidateNested()
   @Type(() => BotApp)
   @IsOptional()
-  botApp?: BotApp | null;
+  botApp?: Array<BotApp>;
 
   @ApiProperty({
     required: true,

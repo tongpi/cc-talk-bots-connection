@@ -15,7 +15,7 @@ import { BooleanFilter } from "../../util/BooleanFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
-import { BotAppWhereUniqueInput } from "../../botApp/base/BotAppWhereUniqueInput";
+import { BotAppListRelationFilter } from "../../botApp/base/BotAppListRelationFilter";
 
 @InputType()
 class OpenAppWhereInput {
@@ -54,15 +54,15 @@ class OpenAppWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => BotAppWhereUniqueInput,
+    type: () => BotAppListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => BotAppWhereUniqueInput)
+  @Type(() => BotAppListRelationFilter)
   @IsOptional()
-  @Field(() => BotAppWhereUniqueInput, {
+  @Field(() => BotAppListRelationFilter, {
     nullable: true,
   })
-  botApp?: BotAppWhereUniqueInput;
+  botApp?: BotAppListRelationFilter;
 
   @ApiProperty({
     required: false,
