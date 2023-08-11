@@ -15,7 +15,7 @@ import { IsString, IsOptional, ValidateNested } from "class-validator";
 import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
-import { OpenAppCreateNestedManyWithoutBotAppsInput } from "./OpenAppCreateNestedManyWithoutBotAppsInput";
+import { OpenAppWhereUniqueInput } from "../../openApp/base/OpenAppWhereUniqueInput";
 import { Type } from "class-transformer";
 
 @InputType()
@@ -67,15 +67,15 @@ class BotAppCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => OpenAppCreateNestedManyWithoutBotAppsInput,
+    type: () => OpenAppWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => OpenAppCreateNestedManyWithoutBotAppsInput)
+  @Type(() => OpenAppWhereUniqueInput)
   @IsOptional()
-  @Field(() => OpenAppCreateNestedManyWithoutBotAppsInput, {
+  @Field(() => OpenAppWhereUniqueInput, {
     nullable: true,
   })
-  openApps?: OpenAppCreateNestedManyWithoutBotAppsInput;
+  openApps?: OpenAppWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,

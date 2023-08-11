@@ -9,7 +9,7 @@ export type BotApp = {
   createdAt: Date;
   id: string;
   inputs: JsonValue;
-  openApps?: Array<OpenApp>;
+  openApps?: OpenApp | null;
   updatedAt: Date;
   welcome: string | null;
 };
