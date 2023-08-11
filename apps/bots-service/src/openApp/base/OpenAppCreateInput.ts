@@ -17,7 +17,7 @@ import {
   ValidateNested,
   IsOptional,
 } from "class-validator";
-import { BotAppCreateNestedManyWithoutOpenAppsInput } from "./BotAppCreateNestedManyWithoutOpenAppsInput";
+import { BotAppWhereUniqueInput } from "../../botApp/base/BotAppWhereUniqueInput";
 import { Type } from "class-transformer";
 
 @InputType()
@@ -56,15 +56,15 @@ class OpenAppCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => BotAppCreateNestedManyWithoutOpenAppsInput,
+    type: () => BotAppWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => BotAppCreateNestedManyWithoutOpenAppsInput)
+  @Type(() => BotAppWhereUniqueInput)
   @IsOptional()
-  @Field(() => BotAppCreateNestedManyWithoutOpenAppsInput, {
+  @Field(() => BotAppWhereUniqueInput, {
     nullable: true,
   })
-  botApp?: BotAppCreateNestedManyWithoutOpenAppsInput;
+  botApp?: BotAppWhereUniqueInput | null;
 }
 
 export { OpenAppCreateInput as OpenAppCreateInput };

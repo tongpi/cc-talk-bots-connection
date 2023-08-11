@@ -26,6 +26,7 @@ import { BotAppCountArgs } from "./BotAppCountArgs";
 import { BotAppFindManyArgs } from "./BotAppFindManyArgs";
 import { BotAppFindUniqueArgs } from "./BotAppFindUniqueArgs";
 import { BotApp } from "./BotApp";
+import { OpenAppFindManyArgs } from "../../openApp/base/OpenAppFindManyArgs";
 import { OpenApp } from "../../openApp/base/OpenApp";
 import { BotAppService } from "../botApp.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
@@ -89,15 +90,7 @@ export class BotAppResolverBase {
   async createBotApp(@graphql.Args() args: CreateBotAppArgs): Promise<BotApp> {
     return await this.service.create({
       ...args,
-      data: {
-        ...args.data,
-
-        openApps: args.data.openApps
-          ? {
-              connect: args.data.openApps,
-            }
-          : undefined,
-      },
+      data: args.data,
     });
   }
 
@@ -114,15 +107,7 @@ export class BotAppResolverBase {
     try {
       return await this.service.update({
         ...args,
-        data: {
-          ...args.data,
-
-          openApps: args.data.openApps
-            ? {
-                connect: args.data.openApps,
-              }
-            : undefined,
-        },
+        data: args.data,
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -156,23 +141,22 @@ export class BotAppResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => OpenApp, {
-    nullable: true,
-    name: "openApps",
-  })
+  @graphql.ResolveField(() => [OpenApp], { name: "openApps" })
   @nestAccessControl.UseRoles({
     resource: "OpenApp",
     action: "read",
     possession: "any",
   })
   async resolveFieldOpenApps(
-    @graphql.Parent() parent: BotApp
-  ): Promise<OpenApp | null> {
-    const result = await this.service.getOpenApps(parent.id);
+    @graphql.Parent() parent: BotApp,
+    @graphql.Args() args: OpenAppFindManyArgs
+  ): Promise<OpenApp[]> {
+    const results = await this.service.findOpenApps(parent.id, args);
 
-    if (!result) {
-      return null;
+    if (!results) {
+      return [];
     }
-    return result;
+
+    return results;
   }
 }

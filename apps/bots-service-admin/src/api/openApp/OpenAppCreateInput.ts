@@ -1,9 +1,9 @@
-import { BotAppCreateNestedManyWithoutOpenAppsInput } from "./BotAppCreateNestedManyWithoutOpenAppsInput";
+import { BotAppWhereUniqueInput } from "../botApp/BotAppWhereUniqueInput";
 
 export type OpenAppCreateInput = {
   activate: boolean;
   appId: string;
   appName: string;
   appSecret: string;
-  botApp?: BotAppCreateNestedManyWithoutOpenAppsInput;
+  botApp?: BotAppWhereUniqueInput | null;
 };

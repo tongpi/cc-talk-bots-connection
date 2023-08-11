@@ -27,6 +27,9 @@ import { BotAppWhereUniqueInput } from "./BotAppWhereUniqueInput";
 import { BotAppFindManyArgs } from "./BotAppFindManyArgs";
 import { BotAppUpdateInput } from "./BotAppUpdateInput";
 import { BotApp } from "./BotApp";
+import { OpenAppFindManyArgs } from "../../openApp/base/OpenAppFindManyArgs";
+import { OpenApp } from "../../openApp/base/OpenApp";
+import { OpenAppWhereUniqueInput } from "../../openApp/base/OpenAppWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -51,15 +54,7 @@ export class BotAppControllerBase {
   })
   async create(@common.Body() data: BotAppCreateInput): Promise<BotApp> {
     return await this.service.create({
-      data: {
-        ...data,
-
-        openApps: data.openApps
-          ? {
-              connect: data.openApps,
-            }
-          : undefined,
-      },
+      data: data,
       select: {
         apiEndPoint: true,
         apiSecret: true,
@@ -68,13 +63,6 @@ export class BotAppControllerBase {
         createdAt: true,
         id: true,
         inputs: true,
-
-        openApps: {
-          select: {
-            id: true,
-          },
-        },
-
         updatedAt: true,
         welcome: true,
       },
@@ -105,13 +93,6 @@ export class BotAppControllerBase {
         createdAt: true,
         id: true,
         inputs: true,
-
-        openApps: {
-          select: {
-            id: true,
-          },
-        },
-
         updatedAt: true,
         welcome: true,
       },
@@ -143,13 +124,6 @@ export class BotAppControllerBase {
         createdAt: true,
         id: true,
         inputs: true,
-
-        openApps: {
-          select: {
-            id: true,
-          },
-        },
-
         updatedAt: true,
         welcome: true,
       },
@@ -184,15 +158,7 @@ export class BotAppControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: {
-          ...data,
-
-          openApps: data.openApps
-            ? {
-                connect: data.openApps,
-              }
-            : undefined,
-        },
+        data: data,
         select: {
           apiEndPoint: true,
           apiSecret: true,
@@ -201,13 +167,6 @@ export class BotAppControllerBase {
           createdAt: true,
           id: true,
           inputs: true,
-
-          openApps: {
-            select: {
-              id: true,
-            },
-          },
-
           updatedAt: true,
           welcome: true,
         },
@@ -247,13 +206,6 @@ export class BotAppControllerBase {
           createdAt: true,
           id: true,
           inputs: true,
-
-          openApps: {
-            select: {
-              id: true,
-            },
-          },
-
           updatedAt: true,
           welcome: true,
         },
@@ -266,5 +218,111 @@ export class BotAppControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/openApps")
+  @ApiNestedQuery(OpenAppFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "OpenApp",
+    action: "read",
+    possession: "any",
+  })
+  async findManyOpenApps(
+    @common.Req() request: Request,
+    @common.Param() params: BotAppWhereUniqueInput
+  ): Promise<OpenApp[]> {
+    const query = plainToClass(OpenAppFindManyArgs, request.query);
+    const results = await this.service.findOpenApps(params.id, {
+      ...query,
+      select: {
+        activate: true,
+        appId: true,
+        appName: true,
+        appSecret: true,
+
+        botApp: {
+          select: {
+            id: true,
+          },
+        },
+
+        createdAt: true,
+        id: true,
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/openApps")
+  @nestAccessControl.UseRoles({
+    resource: "BotApp",
+    action: "update",
+    possession: "any",
+  })
+  async connectOpenApps(
+    @common.Param() params: BotAppWhereUniqueInput,
+    @common.Body() body: OpenAppWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      openApps: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/openApps")
+  @nestAccessControl.UseRoles({
+    resource: "BotApp",
+    action: "update",
+    possession: "any",
+  })
+  async updateOpenApps(
+    @common.Param() params: BotAppWhereUniqueInput,
+    @common.Body() body: OpenAppWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      openApps: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/openApps")
+  @nestAccessControl.UseRoles({
+    resource: "BotApp",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectOpenApps(
+    @common.Param() params: BotAppWhereUniqueInput,
+    @common.Body() body: OpenAppWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      openApps: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }

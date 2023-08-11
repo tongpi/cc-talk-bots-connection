@@ -10,19 +10,19 @@ https://docs.amplication.com/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { InputType, Field } from "@nestjs/graphql";
-import { BotAppWhereUniqueInput } from "../../botApp/base/BotAppWhereUniqueInput";
+import { OpenAppWhereUniqueInput } from "../../openApp/base/OpenAppWhereUniqueInput";
 import { ApiProperty } from "@nestjs/swagger";
 
 @InputType()
-class BotAppCreateNestedManyWithoutOpenAppsInput {
-  @Field(() => [BotAppWhereUniqueInput], {
+class OpenAppCreateNestedManyWithoutBotAppsInput {
+  @Field(() => [OpenAppWhereUniqueInput], {
     nullable: true,
   })
   @ApiProperty({
     required: false,
-    type: () => [BotAppWhereUniqueInput],
+    type: () => [OpenAppWhereUniqueInput],
   })
-  connect?: Array<BotAppWhereUniqueInput>;
+  connect?: Array<OpenAppWhereUniqueInput>;
 }
 
-export { BotAppCreateNestedManyWithoutOpenAppsInput as BotAppCreateNestedManyWithoutOpenAppsInput };
+export { OpenAppCreateNestedManyWithoutBotAppsInput as OpenAppCreateNestedManyWithoutBotAppsInput };

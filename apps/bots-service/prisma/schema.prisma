@@ -23,7 +23,8 @@ model OpenApp {
   appId     String   @unique
   appName   String
   appSecret String
-  botApp    BotApp[]
+  botApp    BotApp?  @relation(fields: [botAppId], references: [id])
+  botAppId  String?
   createdAt DateTime @default(now())
   id        String   @id @default(auto()) @map("_id") @mongo.ObjectId
   updatedAt DateTime @updatedAt
@@ -33,12 +34,11 @@ model BotApp {
   apiEndPoint String
   apiSecret   String
   appDesc     String?
-  appName     String   @unique
-  createdAt   DateTime @default(now())
-  id          String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  appName     String    @unique
+  createdAt   DateTime  @default(now())
+  id          String    @id @default(auto()) @map("_id") @mongo.ObjectId
   inputs      Json?
-  openApps    OpenApp? @relation(fields: [openAppsId], references: [id])
-  openAppsId  String?
-  updatedAt   DateTime @updatedAt
+  openApps    OpenApp[]
+  updatedAt   DateTime  @updatedAt
   welcome     String?
 }

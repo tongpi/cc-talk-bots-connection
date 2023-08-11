@@ -1,13 +1,17 @@
 import * as React from "react";
+
 import {
   List,
   Datagrid,
   ListProps,
   BooleanField,
   TextField,
+  ReferenceField,
   DateField,
 } from "react-admin";
+
 import Pagination from "../Components/Pagination";
+import { BOTAPP_TITLE_FIELD } from "../botApp/BotAppTitle";
 
 export const OpenAppList = (props: ListProps): React.ReactElement => {
   return (
@@ -23,6 +27,13 @@ export const OpenAppList = (props: ListProps): React.ReactElement => {
         <TextField label="应用标识" source="appId" />
         <TextField label="应用名" source="appName" />
         <TextField label="密钥" source="appSecret" />
+        <ReferenceField
+          label="大模型应用"
+          source="botapp.id"
+          reference="BotApp"
+        >
+          <TextField source={BOTAPP_TITLE_FIELD} />
+        </ReferenceField>
         <DateField source="createdAt" label="创建时间" />
         <TextField label="ID" source="id" />
         <DateField source="updatedAt" label="更新时间" />

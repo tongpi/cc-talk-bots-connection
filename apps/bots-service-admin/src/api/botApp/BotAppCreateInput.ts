@@ -1,5 +1,5 @@
 import { InputJsonValue } from "../../types";
-import { OpenAppWhereUniqueInput } from "../openApp/OpenAppWhereUniqueInput";
+import { OpenAppCreateNestedManyWithoutBotAppsInput } from "./OpenAppCreateNestedManyWithoutBotAppsInput";
 
 export type BotAppCreateInput = {
   apiEndPoint: string;
@@ -7,6 +7,6 @@ export type BotAppCreateInput = {
   appDesc?: string | null;
   appName: string;
   inputs?: InputJsonValue;
-  openApps?: OpenAppWhereUniqueInput | null;
+  openApps?: OpenAppCreateNestedManyWithoutBotAppsInput;
   welcome?: string | null;
 };

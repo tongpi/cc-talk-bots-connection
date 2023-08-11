@@ -1,11 +1,11 @@
 import { BooleanFilter } from "../../util/BooleanFilter";
 import { StringFilter } from "../../util/StringFilter";
-import { BotAppListRelationFilter } from "../botApp/BotAppListRelationFilter";
+import { BotAppWhereUniqueInput } from "../botApp/BotAppWhereUniqueInput";
 
 export type OpenAppWhereInput = {
   activate?: BooleanFilter;
   appId?: StringFilter;
   appName?: StringFilter;
-  botApp?: BotAppListRelationFilter;
+  botApp?: BotAppWhereUniqueInput;
   id?: StringFilter;
 };

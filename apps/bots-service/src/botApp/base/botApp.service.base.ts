@@ -47,11 +47,14 @@ export class BotAppServiceBase {
     return this.prisma.botApp.delete(args);
   }
 
-  async getOpenApps(parentId: string): Promise<OpenApp | null> {
+  async findOpenApps(
+    parentId: string,
+    args: Prisma.OpenAppFindManyArgs
+  ): Promise<OpenApp[]> {
     return this.prisma.botApp
-      .findUnique({
+      .findUniqueOrThrow({
         where: { id: parentId },
       })
-      .openApps();
+      .openApps(args);
   }
 }
