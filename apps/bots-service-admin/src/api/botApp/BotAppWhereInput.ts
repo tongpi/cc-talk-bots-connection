@@ -1,8 +1,8 @@
 import { StringFilter } from "../../util/StringFilter";
-import { OpenAppListRelationFilter } from "../openApp/OpenAppListRelationFilter";
+import { OpenAppWhereUniqueInput } from "../openApp/OpenAppWhereUniqueInput";
 
 export type BotAppWhereInput = {
   appName?: StringFilter;
   id?: StringFilter;
-  openApps?: OpenAppListRelationFilter;
+  openApps?: OpenAppWhereUniqueInput;
 };
