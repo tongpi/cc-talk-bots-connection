@@ -5,7 +5,7 @@ export type OpenApp = {
   appId: string;
   appName: string;
   appSecret: string;
-  botApp?: BotApp | null;
+  botApp?: Array<BotApp>;
   createdAt: Date;
   id: string;
   updatedAt: Date;

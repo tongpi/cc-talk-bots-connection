@@ -26,6 +26,7 @@ import { OpenAppCountArgs } from "./OpenAppCountArgs";
 import { OpenAppFindManyArgs } from "./OpenAppFindManyArgs";
 import { OpenAppFindUniqueArgs } from "./OpenAppFindUniqueArgs";
 import { OpenApp } from "./OpenApp";
+import { BotAppFindManyArgs } from "../../botApp/base/BotAppFindManyArgs";
 import { BotApp } from "../../botApp/base/BotApp";
 import { OpenAppService } from "../openApp.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
@@ -93,15 +94,7 @@ export class OpenAppResolverBase {
   ): Promise<OpenApp> {
     return await this.service.create({
       ...args,
-      data: {
-        ...args.data,
-
-        botApp: args.data.botApp
-          ? {
-              connect: args.data.botApp,
-            }
-          : undefined,
-      },
+      data: args.data,
     });
   }
 
@@ -118,15 +111,7 @@ export class OpenAppResolverBase {
     try {
       return await this.service.update({
         ...args,
-        data: {
-          ...args.data,
-
-          botApp: args.data.botApp
-            ? {
-                connect: args.data.botApp,
-              }
-            : undefined,
-        },
+        data: args.data,
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -160,23 +145,22 @@ export class OpenAppResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => BotApp, {
-    nullable: true,
-    name: "botApp",
-  })
+  @graphql.ResolveField(() => [BotApp], { name: "botApp" })
   @nestAccessControl.UseRoles({
     resource: "BotApp",
     action: "read",
     possession: "any",
   })
   async resolveFieldBotApp(
-    @graphql.Parent() parent: OpenApp
-  ): Promise<BotApp | null> {
-    const result = await this.service.getBotApp(parent.id);
+    @graphql.Parent() parent: OpenApp,
+    @graphql.Args() args: BotAppFindManyArgs
+  ): Promise<BotApp[]> {
+    const results = await this.service.findBotApp(parent.id, args);
 
-    if (!result) {
-      return null;
+    if (!results) {
+      return [];
     }
-    return result;
+
+    return results;
   }
 }
