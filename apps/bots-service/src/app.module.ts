@@ -1,5 +1,5 @@
 import { Module, Scope } from "@nestjs/common";
-import { APP_INTERCEPTOR } from "@nestjs/core";
+import { APP_FILTER, APP_INTERCEPTOR } from "@nestjs/core";
 import { MorganInterceptor, MorganModule } from "nest-morgan";
 import { UserModule } from "./user/user.module";
 import { OpenAppModule } from "./openApp/openApp.module";
@@ -14,6 +14,7 @@ import { GraphQLModule } from "@nestjs/graphql";
 
 import { ACLModule } from "./auth/acl.module";
 import { AuthModule } from "./auth/auth.module";
+import { WsBotModule } from "./ws-bot/ws-bot.module";
 
 @Module({
   controllers: [],
@@ -43,7 +44,7 @@ import { AuthModule } from "./auth/auth.module";
         };
       },
       inject: [ConfigService],
-      imports: [ConfigModule],
+      imports: [ConfigModule,WsBotModule],
     }),
   ],
   providers: [
@@ -51,7 +52,7 @@ import { AuthModule } from "./auth/auth.module";
       provide: APP_INTERCEPTOR,
       scope: Scope.REQUEST,
       useClass: MorganInterceptor("combined"),
-    },
+    }    
   ],
 })
 export class AppModule {}
