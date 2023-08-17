@@ -44,10 +44,12 @@ export class WsBotService {
     if(!this.openApps) return
 
     const apiUrl = "http://192.168.15.130:11000"
-    this.openApps.forEach(openApp =>{
+    this.openApps.forEach((openApp:OpenApp) =>{
       const {appId,appName,appSecret,botApp} = openApp
       console.log(appId,appName,appSecret,botApp)
-      this.startWSBootstrap(apiUrl,appId,appName,appSecret,"","")
+      console.log(openApp)
+      // @TODO 
+      this.startWSBootstrap(apiUrl,appId,appName,appSecret,"http://192.168.15.130:8001/v1/chat-messages","app-UhUK3GKvfi6Rryvvlrt5Tkuf")
     })
   }
 
@@ -79,27 +81,28 @@ export class WsBotService {
       if(message.author === user.userId || isAtSomeone || isBotMessage) return
       Logger.log(`${user.user.nickname} Receive message`, message.content);
       try {
-        // client.sendMessage({
-        //   groupId: message.groupId,
-        //   converseId: message.converseId,
-        //   content: "正在准备……，请稍等！",
-        // });        
-        // const result = await getResult(message.content);
-        // await client.replyMessage({
-        //   messageId: message._id,
-        //   author: message.author||'',
-        //   content: message.content
-        // }, {
-        //   groupId: message.groupId,
-        //   converseId: message.converseId,
-        //   content: `\n${stripMentionTag(result)}`,
-        // })    
+        client.sendMessage({
+          groupId: message.groupId,
+          converseId: message.converseId,
+          content: "正在准备……，请稍等！！！",
+        });        
+        const result = await getResult(message.content);
+        await client.replyMessage({
+          messageId: message._id,
+          author: message.author||'',
+          content: message.content
+        }, {
+          groupId: message.groupId,
+          converseId: message.converseId,
+          content: `\n${stripMentionTag(result)}`,
+        })    
       } catch (err) {
         client.sendMessage({
           groupId: message.groupId,
           converseId: message.converseId,
           content: "我有些累了，正在休息中……，请稍等！",
-        });        
+        });     
+        console.log(err)   
         Logger.log('send message failed:', err)
       }      
     }     
