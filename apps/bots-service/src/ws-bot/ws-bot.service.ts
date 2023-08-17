@@ -6,6 +6,7 @@ import { OpenApp } from 'src/openApp/base/OpenApp';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { TailchatWsClient, stripMentionTag } from 'cctalk-client-sdk';
 import { ChatMessage } from 'tailchat-types';
+import { OnEvent } from '@nestjs/event-emitter';
 
 function delay(min: number, max: number): Promise<void> {
   const delayTime = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -25,7 +26,9 @@ export class WsBotService {
     this.startUp()
   }
   // @Cron('45 * * * * *')
-  @Cron(CronExpression.EVERY_5_SECONDS)
+  // @Cron(CronExpression.EVERY_5_SECONDS)
+  // 只要应用数据通过维护端UI发生了变更,重新加载机器人列表
+  @OnEvent('**')
   async updateOpenApp(){
     this.openApps =await this.prisma.openApp.findMany({where:{
       "activate": {

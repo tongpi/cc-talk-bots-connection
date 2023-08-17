@@ -8,7 +8,7 @@ import type { ChatMessage } from 'tailchat-types';
 import { Cron, CronExpression, ScheduleModule } from '@nestjs/schedule';
 import { WsBotService } from './ws-bot.service';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { APP_FILTER } from '@nestjs/core';
+import { OpenAppCreatedListener } from './listens/openApp-Created.listen';
 
 function delay(min: number, max: number): Promise<void> {
   const delayTime = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -51,7 +51,7 @@ function getRandomNumbers(min: number, max: number, count: number): number[] {
   imports: [WsBotModule, ScheduleModule.forRoot()],
   controllers: [],
   providers: [
-    WsBotService
+    WsBotService,OpenAppCreatedListener
   ],
 })
 export class WsBotModule {
