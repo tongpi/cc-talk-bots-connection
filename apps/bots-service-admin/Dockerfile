@@ -15,7 +15,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # installs packages and their dependencies
-RUN npm install
+RUN npm install --registry https://registry.npmmirror.com
 
 # copy over the code base
 COPY . .
@@ -25,6 +25,7 @@ RUN npm run build
 
 # multi-stage: production (runtime)
 FROM nginx:1.22-alpine AS production
+# FROM nginx:stable-alpine AS prod
 
 # copy over the bundled code from the build stage
 COPY --from=base /app/build /usr/share/nginx/html

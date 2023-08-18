@@ -15,6 +15,14 @@ services:
       CC_TALK_SERVER_URL: ${CC_TALK_SERVER_URL}
     depends_on:
       - migrate
+  adminui:
+    image: cc-aigc/bots-service-admin
+    ports:
+      - 3001:80
+    environment:
+      REACT_APP_SERVER_URL: ${REACT_APP_SERVER_URL}
+    depends_on:
+      - server
   migrate:
     build:
       context: .
