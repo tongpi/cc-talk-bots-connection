@@ -16,10 +16,15 @@ import { ACLModule } from "./auth/acl.module";
 import { AuthModule } from "./auth/auth.module";
 import { WsBotModule } from "./ws-bot/ws-bot.module";
 import { EventEmitterModule } from "@nestjs/event-emitter";
+import  config  from './config/configuration';
 
 @Module({
   controllers: [],
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [config]
+    }),
     EventEmitterModule.forRoot({
       // set this to `true` to use wildcards
       wildcard: true,

@@ -7,6 +7,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { TailchatWsClient, stripMentionTag } from 'cctalk-client-sdk';
 import { ChatMessage } from 'tailchat-types';
 import { OnEvent } from '@nestjs/event-emitter';
+import { ConfigService } from '@nestjs/config';
 
 function delay(min: number, max: number): Promise<void> {
   const delayTime = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -21,7 +22,7 @@ type OpenAppResult = { activate: boolean; appId: string; appName: string; appSec
 @Injectable()
 export class WsBotService {
   openApps:  OpenAppResult[]=[];
-  constructor(protected readonly prisma: PrismaService) {
+  constructor(protected readonly prisma: PrismaService, private config: ConfigService) {
     (async () => this.updateOpenApp())()
     this.startUp()
   }
@@ -62,13 +63,15 @@ export class WsBotService {
   }
 
   startUp() {
-    console.log(">>>>>1")
     if (!this.openApps) return
-
-    const apiUrl = "http://192.168.15.130:11000"
+    const ccTalkServerURL =  this.config.get<string>('ccTalkServerURL') ||''; // "http://192.168.15.130:11000"
+    if(ccTalkServerURL.length<10){
+      Logger.error(`环境变量CC_TALK_SERVER_URL的值(当前为：${ccTalkServerURL})必须为正确的URL`);
+      return
+    }
     this.openApps.forEach((openApp: OpenAppResult) => {
       const { appId, appName, appSecret, botApp } = openApp
-      this.startWSBootstrap(apiUrl, appId, appName, appSecret, botApp?.apiEndPoint||"", botApp?.apiSecret||"")
+      this.startWSBootstrap(ccTalkServerURL, appId, appName, appSecret, botApp?.apiEndPoint||"", botApp?.apiSecret||"")
     })
   }
 
