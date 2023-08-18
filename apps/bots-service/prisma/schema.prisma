@@ -24,7 +24,7 @@ model OpenApp {
   appName   String
   appSecret String
   botApp    BotApp?  @relation(fields: [botAppId], references: [id])
-  botAppId  String?
+  botAppId  String?　@mongo.ObjectId
   createdAt DateTime @default(now())
   id        String   @id @default(auto()) @map("_id") @mongo.ObjectId
   updatedAt DateTime @updatedAt
