@@ -16,10 +16,13 @@ import { ACLModule } from "./auth/acl.module";
 import { AuthModule } from "./auth/auth.module";
 import { WsBotModule } from "./ws-bot/ws-bot.module";
 import { EventEmitterModule } from "@nestjs/event-emitter";
+import { AppController } from './app/app.controller';
+import { AppService } from './app/app.service';
 import  config  from './config/configuration';
+import { PrismaService } from "./prisma/prisma.service";
 
 @Module({
-  controllers: [],
+  controllers: [AppController],
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
@@ -65,7 +68,7 @@ import  config  from './config/configuration';
           introspection: playground || introspection,
         };
       },
-      inject: [ConfigService],
+      inject: [ConfigService,PrismaService],
       imports: [ConfigModule,WsBotModule],
     }),
   ],
@@ -74,7 +77,8 @@ import  config  from './config/configuration';
       provide: APP_INTERCEPTOR,
       scope: Scope.REQUEST,
       useClass: MorganInterceptor("combined"),
-    }    
+    },
+    AppService    
   ],
 })
 export class AppModule {}

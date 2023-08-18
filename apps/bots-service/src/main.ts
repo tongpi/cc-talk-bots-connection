@@ -18,7 +18,7 @@ const { PORT = 3000 } = process.env;
 async function main() {
   const app = await NestFactory.create(AppModule, { cors: true });
 
-  app.setGlobalPrefix("api");
+  app.setGlobalPrefix("api/v1");
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
