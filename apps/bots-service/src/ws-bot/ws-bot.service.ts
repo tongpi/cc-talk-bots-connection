@@ -109,7 +109,8 @@ export class WsBotService {
           converseId: message.converseId,
           content: "正在准备……，请稍等！！！",
         });
-        const result = await getResult(message.content);
+        let result = await getResult(message.content);
+        result = `[md]${result}[/md]`
         await client.replyMessage({
           messageId: message._id,
           author: message.author || '',

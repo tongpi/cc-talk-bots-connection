@@ -72,7 +72,8 @@ export class AppService {
       return response.data.answer
     }
 
-    const result = await getResult();
+    let result = await getResult();
+    result = `[md]${result}[/md]`
 
     try {
       const message = await client.replyMessage({
