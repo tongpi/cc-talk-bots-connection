@@ -25,6 +25,6 @@ services:
       interval: 10s
       timeout: 10s
     volumes:
-      - mongo:/var/lib/mongosql/data
+      - mongo:/data/db
 volumes:
   mongo: ~
