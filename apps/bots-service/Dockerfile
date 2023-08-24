@@ -8,8 +8,10 @@ WORKDIR /app
 # and the package-lock.json are copied over
 COPY package*.json ./
 
+RUN npm install -g npm@9.8.1 --registry https://registry.npmmirror.com
+RUN npm install -g pnpm --registry https://registry.npmmirror.com
 # installs packages and their dependencies
-RUN npm install --registry https://registry.npmmirror.com
+RUN pnpm install --loglevel verbose --unsafe-perm --registry https://registry.npmmirror.com
 
 # copy over the prisma schema
 COPY prisma/schema.prisma ./prisma/
@@ -54,8 +56,9 @@ COPY --from=base /app/tsconfig* ./
 # change ownership of the workspace directory
 RUN chown -R ${uid}:${gid} /app/
 
+RUN npm install -g pnpm --registry https://registry.npmmirror.com
 # get rid of the development dependencies
-RUN npm install --production --registry https://registry.npmmirror.com
+RUN pnpm install --production --unsafe-perm --registry https://registry.npmmirror.com
 
 # set user to the created non-privileged user
 USER ${user}

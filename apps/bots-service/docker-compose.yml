@@ -1,10 +1,7 @@
 version: "3"
 services:
   server:
-    build:
-      context: .
-      args:
-        NPM_LOG_LEVEL: notice
+    image: cc-aigc/bots-service
     ports:
       - ${PORT}:3000
     environment:
@@ -24,10 +21,7 @@ services:
     depends_on:
       - server
   migrate:
-    build:
-      context: .
-      args:
-        NPM_LOG_LEVEL: notice
+    image: cc-aigc/bots-service
     command: npm run db:init
     working_dir: /app/server
     environment:
