@@ -13,11 +13,15 @@ services:
     depends_on:
       - migrate
   adminui:
-    image: cc-aigc/bots-service-admin
+    # image: cc-aigc/bots-service-admin
+    build:
+      context: ../bots-service-admin
+      args:
+        - REACT_APP_SERVER_URL=${REACT_APP_SERVER_URL}
     ports:
       - 3001:80
-    environment:
-      REACT_APP_SERVER_URL: ${REACT_APP_SERVER_URL}
+    # environment:
+    #   REACT_APP_SERVER_URL: ${REACT_APP_SERVER_URL}
     depends_on:
       - server
   migrate:

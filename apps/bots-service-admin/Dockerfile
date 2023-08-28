@@ -1,3 +1,5 @@
+# docker build --build-arg REACT_APP_SERVER_URL=http://192.168.15.130:3000 -t cc-aigc/bots-service-admin .
+
 # multi-stage: base (build)
 FROM node:18.13.0-slim AS base
 
